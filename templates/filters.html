@@ -28,8 +28,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <h6><i class="bi bi-building"></i> Court</h6>
-                            <p>{{ court_choices.get(fg.court|int, 'Unknown Court') }}</p>
+				<h6><i class="bi bi-building"></i> Court</h6>
+				<p>
+				    {% if fg.court == '0' %}
+					All Courts
+				    {% else %}
+					{{ court_choices.get(fg.court|int, 'Unknown Court') }}
+				    {% endif %}
+				</p>
                         </div>
                         <div class="col-md-3">
                             <h6><i class="bi bi-geo-alt"></i> Settlements</h6>

@@ -92,14 +92,22 @@ def process_listing(title, description, fg):
         return False
 
 def scrape_vehicles(court, fg_id, fg):
-    """Scrape vehicle listings with pagination and filtering"""
-    base_url = f"https://sales.bcpea.org/vehicles?court={court}"
+    """Scrape vehicle listings with pagination"""
+    base_url = "https://sales.bcpea.org/vehicles"
+    if int(court) != 0:
+        base_url += f"?court={court}"
+    
     page = 1
     all_listings = []
     
     while True:
         try:
-            url = f"{base_url}&p={page}"
+            # Build URL based on court selection
+            if int(court) == 0:  # All Courts
+                url = f"{base_url}?p={page}" if page > 1 else base_url
+            else:  # Specific court
+                url = f"{base_url}&p={page}" if page > 1 else base_url
+            
             response = requests.get(url, timeout=15)
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -217,16 +225,22 @@ def scrape_vehicles(court, fg_id, fg):
 
             page += 1
 
+        except requests.exceptions.HTTPError as e:
+            if response.status_code == 404:
+                break
+            logging.error(f"HTTP Error: {str(e)}")
+            break
         except Exception as e:
-            logging.error(f"❌ Vehicle page error: {str(e)}")
+            logging.error(f"Error: {str(e)}")
             break
 
     return all_listings
 
 def scrape_properties(court, fg_id, fg):
-    """Scrape property listings with full filtering"""
-    url = f"https://sales.bcpea.org/properties?court={court}&perpage=9999"
-    listings = []
+    if int(court) == 0:
+        url = "https://sales.bcpea.org/properties?perpage=9999"
+    else:
+        url = f"https://sales.bcpea.org/properties?court={court}&perpage=9999"
     
     try:
         response = requests.get(url, timeout=15)

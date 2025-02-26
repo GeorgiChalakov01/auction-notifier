@@ -18,11 +18,11 @@
 
             <div class="mb-4">
                 <label class="form-label fw-bold">Court:</label>
-                <select name="court" class="form-select form-select-lg" required>
-                    {% for num, name in court_choices %}
-                        <option value="{{ num }}">{{ name }}</option>
-                    {% endfor %}
-                </select>
+		<select name="court" class="form-select form-select-lg" required>
+		    {% for num, name in court_choices %}
+			<option value="{{ num }}">{{ name }}</option>
+		    {% endfor %}
+		</select>
             </div>
 
             <div class="mb-4">
