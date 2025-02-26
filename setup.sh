@@ -1,3 +1,17 @@
+#!/bin/sh
+
+rm instance/bcpea.db
+
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate
-pip install requests beautifulsoup4
+
+# Activate virtual environment
+. venv/bin/activate
+
+# Install required packages
+pip install flask requests beautifulsoup4 lxml python-dotemail
+
+# Create necessary directories
+mkdir -p instance templates static/css static/js
+
+echo "Setup complete. Activate virtual environment with: source venv/bin/activate"

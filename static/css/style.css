@@ -1,0 +1,83 @@
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-text {
+    color: #6c757d;
+    min-height: 3rem;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+}
+
+.quick-actions {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+}
+
+.badge {
+    font-size: 0.9em;
+    padding: 0.6em 1em;
+}
+
+.alert {
+    border: none;
+}
+
+.card-title i {
+    margin-right: 0.5rem;
+}
+
+.list-unstyled li {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
+.btn {
+    margin-right: 0.5rem;
+}
+
+.img-fluid {
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.filter-group {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.group-header h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.count-badge {
+    background-color: #007bff;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+}
+
+.listing-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.listing-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+}

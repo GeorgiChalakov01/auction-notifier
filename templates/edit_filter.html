@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0"><i class="bi bi-pencil"></i> Edit Filter Group</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-4">
+                <label class="form-label fw-bold">Court:</label>
+                <select name="court" class="form-select form-select-lg" required>
+                    {% for num, name in court_choices %}
+                        <option value="{{ num }}" {% if num|string == filter.court|string %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Settlements, Excluded, Blacklist sections same as add_filter.html -->
+            <!-- Include dynamic fields with existing values -->
+            {% macro render_field_section(field_name, label, values) %}
+                <div class="mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <label class="form-label fw-bold me-3">{{ label }}:</label>
+                        <button type="button" class="btn btn-success btn-sm" onclick="addField('{{ field_name }}')">
+                            <i class="bi bi-plus"></i> Add
+                        </button>
+                    </div>
+                    <div id="{{ field_name }}-container">
+                        {% if values %}
+                            {% for value in values %}
+                                <div class="input-group mb-2">
+                                    <input type="text" name="{{ field_name }}[]" class="form-control" value="{{ value }}">
+                                    <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="input-group mb-2">
+                                <input type="text" name="{{ field_name }}[]" class="form-control">
+                                <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endmacro %}
+
+            {{ render_field_section('settlements', 'Settlements', filter.settlements.split(',') if filter.settlements) }}
+            {{ render_field_section('excluded', 'Excluded Types', filter.excluded_property_types.split(',') if filter.excluded_property_types) }}
+            {{ render_field_section('blacklist', 'Blacklist Terms', filter.blacklist.split(',') if filter.blacklist) }}
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Associate Users:</label>
+                <div class="row g-3">
+                    {% for user in users %}
+                        <div class="col-md-4">
+                            <div class="form-check p-3 border rounded">
+                                <input class="form-check-input" type="checkbox" 
+                                    name="user_emails" value="{{ user.email }}" id="user{{ user.id }}"
+                                    {% if user.email in associated_emails %}checked{% endif %}>
+                                <label class="form-check-label ms-2" for="user{{ user.id }}">
+                                    {{ user.email }}
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-save"></i> Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Same dynamic field handling as add_filter.html
+</script>
+{% endblock %}

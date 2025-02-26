@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0"><i class="bi bi-funnel"></i> Create New Filter Group</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-4">
+                <label class="form-label fw-bold">Court:</label>
+                <select name="court" class="form-select form-select-lg" required>
+                    {% for num, name in court_choices %}
+                        <option value="{{ num }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <label class="form-label fw-bold me-3">Settlements:</label>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addField('settlements')">
+                        <i class="bi bi-plus"></i> Add
+                    </button>
+                </div>
+                <div id="settlements-container">
+                    <div class="input-group mb-2">
+                        <input type="text" name="settlements[]" class="form-control">
+                        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <label class="form-label fw-bold me-3">Excluded Types:</label>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addField('excluded')">
+                        <i class="bi bi-plus"></i> Add
+                    </button>
+                </div>
+                <div id="excluded-container">
+                    <div class="input-group mb-2">
+                        <input type="text" name="excluded[]" class="form-control">
+                        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <label class="form-label fw-bold me-3">Blacklist Terms:</label>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addField('blacklist')">
+                        <i class="bi bi-plus"></i> Add
+                    </button>
+                </div>
+                <div id="blacklist-container">
+                    <div class="input-group mb-2">
+                        <input type="text" name="blacklist[]" class="form-control">
+                        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Associate Users:</label>
+                <div class="row g-3">
+                    {% for user in users %}
+                        <div class="col-md-4">
+                            <div class="form-check p-3 border rounded">
+                                <input class="form-check-input" type="checkbox" 
+                                    name="user_emails" value="{{ user.email }}" id="user{{ user.id }}">
+                                <label class="form-check-label ms-2" for="user{{ user.id }}">
+                                    {{ user.email }}
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-save"></i> Save Filter Group
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function addField(type) {
+    const container = document.getElementById(`${type}-container`);
+    const newGroup = document.createElement('div');
+    newGroup.className = 'input-group mb-2';
+    newGroup.innerHTML = `
+        <input type="text" name="${type}[]" class="form-control">
+        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+            <i class="bi bi-dash"></i>
+        </button>
+    `;
+    container.appendChild(newGroup);
+}
+
+function removeField(btn) {
+    btn.closest('.input-group').remove();
+}
+</script>
+{% endblock %}
