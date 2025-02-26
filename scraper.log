@@ -923,3 +923,22 @@
 2025-02-26 21:40:27,735 - INFO - 🏁 Scraping complete. Processed 1 listings total
 2025-02-26 21:40:27,736 - INFO - 📧 Preparing to send emails to 1 users
 2025-02-26 21:40:30,611 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:42:51,473 - INFO - 🚀 Starting scraping process
+2025-02-26 21:42:51,473 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:42:53,331 - INFO - 🚗 Found 12 vehicles on page 1
+2025-02-26 21:42:54,185 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5708 - missing description words: мерцедес
+2025-02-26 21:42:55,049 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5707 - missing description words: мерцедес
+2025-02-26 21:42:55,905 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5702 - missing description words: мерцедес
+2025-02-26 21:42:56,742 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5701 - missing description words: мерцедес
+2025-02-26 21:42:57,718 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5673 - missing description words: мерцедес
+2025-02-26 21:42:58,561 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5672 - missing description words: мерцедес
+2025-02-26 21:42:59,336 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5665 - missing description words: мерцедес
+2025-02-26 21:43:00,122 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5664 - missing description words: мерцедес
+2025-02-26 21:43:00,952 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5663 - missing description words: мерцедес
+2025-02-26 21:43:01,943 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5660 - missing description words: мерцедес
+2025-02-26 21:43:02,834 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5633 - missing description words: мерцедес
+2025-02-26 21:43:03,696 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5608 - missing description words: мерцедес
+2025-02-26 21:43:04,541 - INFO - 🚗 Found 1 vehicles on page 2
+2025-02-26 21:43:05,955 - INFO - 🏁 Scraping complete. Processed 1 listings total
+2025-02-26 21:43:05,955 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:43:07,723 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com

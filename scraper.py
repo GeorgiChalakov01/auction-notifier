@@ -201,7 +201,7 @@ def scrape_vehicles(court, fg_id, fg):
                                         <li class="text-muted small">Filter Group: {fg_id}</li>
                                     </ul>
                                     <div class="mt-2">
-                                        <a href="{link}" class="btn btn-primary btn-sm" target="_blank">
+                                        <a href="{link}" class="btn btn-primary btn-sm" target="_blank" style="color: white;">
                                             <i class="bi bi-eye"></i> View Details
                                         </a>
                                     </div>
