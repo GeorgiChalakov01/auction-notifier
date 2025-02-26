@@ -49,92 +49,250 @@ def get_active_filters():
         
         filters = {}
         for row in cursor:
-            key = (row['court'], row['id'])
+            key = (row['type'], row['court'], row['id'])
             if key not in filters:
                 filters[key] = {
                     'settlements': [s.strip() for s in row['settlements'].split(',')] if row['settlements'] else [],
                     'excluded': [e.strip() for e in row['excluded_property_types'].split(',')] if row['excluded_property_types'] else [],
                     'blacklist': [b.strip().lower() for b in row['blacklist'].split(',')] if row['blacklist'] else [],
+                    'required_title_words': [t.strip().lower() for t in row['required_title_words'].split(',')] 
+                        if row['required_title_words'] else [],
+                    'required_description_words': [d.strip().lower() for d in row['required_description_words'].split(',')] 
+                        if row['required_description_words'] else [],
                     'users': set()
                 }
             filters[key]['users'].add(row['email'])
         
         conn.close()
-        logging.info(f"Loaded {len(filters)} active filter groups")
         return filters
     except Exception as e:
         logging.error(f"Error loading filters: {str(e)}")
         return {}
 
-def scrape_and_notify():
-    """Main scraping function"""
-    logging.info("🚀 Starting scraping process")
-    filters = get_active_filters()
-    
-    if not filters:
-        logging.warning("⚠️ No active filters found")
-        return
+def process_listing(title, description, fg):
+    """Validate listing against required words"""
+    try:
+        # Check required title words
+        if fg.get('required_title_words'):
+            title_lower = title.lower()
+            if not all(word in title_lower 
+                      for word in fg['required_title_words']):
+                return False
 
-    user_listings = {}
-    total_processed = 0
-
-    for (court, fg_id), fg in filters.items():
-        logging.info(f"🔍 Processing court {court} (Filter Group {fg_id})")
-        url = f"https://sales.bcpea.org/properties?court={court}&perpage=9999"
+        # Check required description words
+        if fg.get('required_description_words'):
+            desc_lower = description.lower()
+            if not all(word in desc_lower 
+                      for word in fg['required_description_words']):
+                return False
         
+        return True
+    except Exception as e:
+        logging.error(f"Filter validation error: {str(e)}")
+        return False
+
+def scrape_vehicles(court, fg_id, fg):
+    """Scrape vehicle listings with pagination and filtering"""
+    base_url = f"https://sales.bcpea.org/vehicles?court={court}"
+    page = 1
+    all_listings = []
+    
+    while True:
         try:
-            response = requests.get(url, timeout=10)
+            url = f"{base_url}&p={page}"
+            response = requests.get(url, timeout=15)
             response.raise_for_status()
-            logging.info(f"🌐 Successfully fetched {url}")
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            # Check for no results
+            if soup.find('p', string='Няма намерени резултати'):
+                break
+
+            listings = soup.find_all("div", class_="item__group")
+            logging.info(f"🚗 Found {len(listings)} vehicles on page {page}")
+
+            for listing in listings:
+                try:
+                    # Extract basic info
+                    header = listing.find("div", class_="header")
+                    title = header.find("div", class_="title").text.strip()
+                    category = header.find("div", class_="category").text.strip()
+                    
+                    # Extract settlement
+                    settlement_div = listing.find("div", class_="label__group", 
+                                                string=lambda t: "НАСЕЛЕНО МЯСТО" in t if t else False)
+                    settlement = (settlement_div.find_next("div", class_="info").text.strip() 
+                            if settlement_div else "Unknown")
+                    
+                    # Extract price
+                    price_div = listing.find("div", class_="content--price")
+                    price = (price_div.find("div", class_="price").text.strip() 
+                            if price_div else "N/A")
+                    
+                    link = 'https://sales.bcpea.org' + listing.find("a")['href']
+                    img = listing.find("img")['src']
+
+                    # Fetch description
+                    try:
+                        details_response = requests.get(link, timeout=10)
+                        details_soup = BeautifulSoup(details_response.content, 'html.parser')
+                        description_div = details_soup.find("div", class_="label__group-description")
+                        description = (' '.join([p.text.strip() for p in description_div.find_all("p")]) 
+                                    if description_div else "")
+                    except Exception as e:
+                        logging.warning(f"⚠️ Failed to fetch vehicle details: {str(e)}")
+                        continue
+
+                    # Convert to lowercase for filtering
+                    title_lower = title.lower()
+                    description_lower = description.lower()
+                    settlement_lower = settlement.lower()
+                    category_lower = category.lower()
+
+                    # Apply filters
+                    filter_reasons = []
+                    
+                    # Required title words
+                    if fg['required_title_words']:
+                        missing_words = [word for word in fg['required_title_words'] 
+                                       if word not in title_lower]
+                        if missing_words:
+                            filter_reasons.append(f"missing title words: {', '.join(missing_words)}")
+
+                    # Required description words
+                    if fg['required_description_words']:
+                        missing_words = [word for word in fg['required_description_words'] 
+                                       if word not in description_lower]
+                        if missing_words:
+                            filter_reasons.append(f"missing description words: {', '.join(missing_words)}")
+
+                    # Settlement filter
+                    if fg['settlements'] and settlement_lower not in [s.lower() for s in fg['settlements']]:
+                        filter_reasons.append("settlement mismatch")
+
+                    # Category filter
+                    if category_lower in [e.lower() for e in fg['excluded']]:
+                        filter_reasons.append("excluded category")
+
+                    # Blacklist filter
+                    if any(term in description_lower for term in fg['blacklist']):
+                        filter_reasons.append("blacklisted term")
+
+                    if filter_reasons:
+                        logging.info(f"⛔ Skipping vehicle {link} - {', '.join(filter_reasons)}")
+                        continue
+
+                    # Build listing HTML
+                    listing_html = f'''
+                    <div class="listing-card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <a href="{link}" target="_blank">
+                                    <img src="https://sales.bcpea.org{img}" class="listing-image">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="listing-body">
+                                    <ul class="list-unstyled">
+                                        <li><i class="bi bi-car-front"></i> {title}</li>
+                                        <li><i class="bi bi-tag"></i> Category: {category}</li>
+                                        <li><i class="bi bi-geo-alt"></i> Location: {settlement}</li>
+                                        <li><i class="bi bi-cash"></i> Price: {price}</li>
+                                        <li class="text-muted small">Filter Group: {fg_id}</li>
+                                    </ul>
+                                    <div class="mt-2">
+                                        <a href="{link}" class="btn btn-primary btn-sm" target="_blank">
+                                            <i class="bi bi-eye"></i> View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    '''
+                    all_listings.append(listing_html)
+
+                except Exception as e:
+                    logging.error(f"❌ Vehicle processing error: {str(e)}")
+
+            page += 1
+
         except Exception as e:
-            logging.error(f"❌ Failed to fetch {url}: {str(e)}")
-            continue
+            logging.error(f"❌ Vehicle page error: {str(e)}")
+            break
 
+    return all_listings
+
+def scrape_properties(court, fg_id, fg):
+    """Scrape property listings with full filtering"""
+    url = f"https://sales.bcpea.org/properties?court={court}&perpage=9999"
+    listings = []
+    
+    try:
+        response = requests.get(url, timeout=15)
         soup = BeautifulSoup(response.content, 'html.parser')
-        listings = soup.find_all("div", class_="item__group")
-        logging.info(f"🏠 Found {len(listings)} listings for court {court}")
+        property_listings = soup.find_all("div", class_="item__group")
+        logging.info(f"🏠 Found {len(property_listings)} properties")
 
-        fg_listings = []
-        for idx, listing in enumerate(listings):
+        for listing in property_listings:
             try:
                 # Extract basic info
                 prop_type = listing.find("div", class_="title").text.strip()
-                settlement = listing.find_all("div", class_="info")[0].text.strip()
-                address = listing.find_all("div", class_="info")[1].text.strip()
+                info_divs = listing.find_all("div", class_="info")
+                settlement = info_divs[0].text.strip() if len(info_divs) > 0 else "Unknown"
+                address = info_divs[1].text.strip() if len(info_divs) > 1 else "N/A"
                 area = listing.find("div", class_="category").text.strip()
                 price = listing.find("div", class_="price").text.strip()
                 link = 'https://sales.bcpea.org' + listing.find("a")['href']
                 img = listing.find("img")['src']
-                listing_number = link.split('/')[-1]
 
-                logging.info(f"📄 Processing listing {idx+1}/{len(listings)}: {prop_type} in {settlement}")
-
-                # Fetch details page
+                # Fetch description
                 try:
-                    details_page = requests.get(link, timeout=5)
-                    details_page.raise_for_status()
+                    details_response = requests.get(link, timeout=10)
+                    details_soup = BeautifulSoup(details_response.content, 'html.parser')
+                    description_div = details_soup.find("div", class_="label__group-description")
+                    description = (' '.join([p.text.strip() for p in description_div.find_all("p")]) 
+                                if description_div else "")
                 except Exception as e:
-                    logging.warning(f"⚠️ Failed to fetch details page {link}: {str(e)}")
+                    logging.warning(f"⚠️ Failed to fetch property details: {str(e)}")
                     continue
 
-                # Extract description and Kais ID
-                details_soup = BeautifulSoup(details_page.content, 'html.parser')
-                description_div = details_soup.find("div", class_="label__group label__group-description")
-                description = ' '.join([p.text.strip() for p in description_div.find_all("p")]) if description_div else ""
+                # Convert to lowercase for filtering
+                title_lower = prop_type.lower()
+                description_lower = description.lower()
+                settlement_lower = settlement.lower()
+
+                # Apply filters
+                filter_reasons = []
                 
-                # Blacklist check
-                if any(term in description.lower() for term in fg['blacklist']):
-                    logging.info(f"⛔ Skipping listing {link} due to blacklist match")
-                    continue
+                # Required title words
+                if fg['required_title_words']:
+                    missing_words = [word for word in fg['required_title_words'] 
+                                   if word not in title_lower]
+                    if missing_words:
+                        filter_reasons.append(f"missing title words: {', '.join(missing_words)}")
+
+                # Required description words
+                if fg['required_description_words']:
+                    missing_words = [word for word in fg['required_description_words'] 
+                                   if word not in description_lower]
+                    if missing_words:
+                        filter_reasons.append(f"missing description words: {', '.join(missing_words)}")
 
                 # Settlement filter
-                if fg['settlements'] and settlement not in fg['settlements']:
-                    logging.info(f"⛔ Skipping listing {link} - settlement mismatch")
-                    continue
+                if fg['settlements'] and settlement_lower not in [s.lower() for s in fg['settlements']]:
+                    filter_reasons.append("settlement mismatch")
 
                 # Property type filter
-                if prop_type in fg['excluded']:
-                    logging.info(f"⛔ Skipping listing {link} - excluded type")
+                if prop_type.lower() in [e.lower() for e in fg['excluded']]:
+                    filter_reasons.append("excluded type")
+
+                # Blacklist filter
+                if any(term in description_lower for term in fg['blacklist']):
+                    filter_reasons.append("blacklisted term")
+
+                if filter_reasons:
+                    logging.info(f"⛔ Skipping property {link} - {', '.join(filter_reasons)}")
                     continue
 
                 # Extract KaisCadastre ID
@@ -143,9 +301,8 @@ def scrape_and_notify():
                     try:
                         id_part = description.split("идентификатор")[1][:30]
                         kais_id = ''.join([c for c in id_part if c in '0123456789.'])
-                        logging.info(f"🔑 Found KaisCadastre ID: {kais_id}")
-                    except Exception as e:
-                        logging.warning(f"⚠️ Could not extract KaisCadastre ID: {str(e)}")
+                    except:
+                        pass
 
                 # Build listing HTML
                 listing_html = f'''
@@ -159,20 +316,22 @@ def scrape_and_notify():
                         <div class="col-md-8">
                             <div class="listing-body">
                                 <ul class="list-unstyled">
-                                    <li><i class="bi bi-building"></i> Type: {prop_type}</li>
-                                    <li><i class="bi bi-geo-alt"></i> Location: {settlement}</li>
-                                    <li><i class="bi bi-pin-map"></i> Address: 
-                                        <a href="https://maps.google.com/?q={urllib.parse.quote(address)}" target="_blank">
-                                            {address}
-                                        </a>
+                                    <li><i class="bi bi-building"></i> {prop_type}</li>
+                                    <li><i class="bi bi-geo-alt"></i> {settlement}</li>
+                                    <li><i class="bi bi-pin-map"></i> 
+                                        <a href="https://maps.google.com/?q={urllib.parse.quote(address)}" 
+                                           target="_blank">{address}</a>
                                     </li>
-                                    <li><i class="bi bi-arrows-fullscreen"></i> Area: {area}</li>
-                                    <li><i class="bi bi-tag"></i> Price: {price}</li>
-                                    <li><i class="bi bi-fingerprint"></i> KaisCadastre ID: {kais_id}</li>
+                                    <li><i class="bi bi-arrows-fullscreen"></i> {area}</li>
+                                    <li><i class="bi bi-tag"></i> {price}</li>
+                                    <li><i class="bi bi-fingerprint"></i> KAIS ID: {kais_id}</li>
+                                    <li class="text-muted small">Filter Group: {fg_id}</li>
                                 </ul>
                                 <div class="mt-2">
-                                    <a href="https://kais.cadastre.bg/bg/Map" class="btn btn-primary btn-sm" style="color: white;" target="_blank">
-                                        <i class="bi bi-map"></i> Open KaisCadastre
+                                    <a href="https://kais.cadastre.bg/bg/Map" 
+                                       class="btn btn-primary btn-sm" 
+                                       target="_blank">
+                                        <i class="bi bi-map"></i> KaisCadastre
                                     </a>
                                 </div>
                             </div>
@@ -180,22 +339,51 @@ def scrape_and_notify():
                     </div>
                 </div>
                 '''
-                fg_listings.append(listing_html)
-                total_processed += 1
+                listings.append(listing_html)
 
             except Exception as e:
-                logging.error(f"❌ Error processing listing: {str(e)}")
+                logging.error(f"❌ Property processing error: {str(e)}")
 
-        # Add filter group listings to users
+    except Exception as e:
+        logging.error(f"❌ Property page error: {str(e)}")
+
+    return listings
+
+def scrape_and_notify():
+    """Main scraping function"""
+    logging.info("🚀 Starting scraping process")
+    filters = get_active_filters()
+    
+    if not filters:
+        logging.warning("⚠️ No active filters found")
+        return
+
+    user_listings = {}
+    total_processed = 0
+
+    for (filter_type, court, fg_id), fg in filters.items():
+        logging.info(f"🔍 Processing {filter_type} court {court} (Filter Group {fg_id})")
+        
+        if filter_type == 'property':
+            listings = scrape_properties(court, fg_id, fg)
+        elif filter_type == 'vehicle':
+            listings = scrape_vehicles(court, fg_id, fg)
+        else:
+            logging.warning(f"⚠️ Unknown filter type: {filter_type}")
+            continue
+
+        # Add listings to users
         court_name = next((name for num, name in COURT_CHOICES if num == int(court)), 'Unknown Court')
         for user in fg['users']:
             if user not in user_listings:
                 user_listings[user] = {}
             user_listings[user][fg_id] = {
+                'type': filter_type.capitalize(),
                 'court': court_name,
-                'count': len(fg_listings),
-                'listings': fg_listings
+                'count': len(listings),
+                'listings': listings
             }
+        total_processed += len(listings)
 
     logging.info(f"🏁 Scraping complete. Processed {total_processed} listings total")
     send_emails(user_listings)
@@ -221,8 +409,8 @@ def send_emails(user_listings):
                 section_html = f'''
                 <div class="filter-group">
                     <div class="group-header">
-                        <h3>{data['court']} (Filter Group {fg_id})</h3>
-                        <p class="count-badge">{data['count']} properties found</p>
+                        <h3>{data['type']} Listings - {data['court']} (Filter Group {fg_id})</h3>
+                        <p class="count-badge">{data['count']} items found</p>
                     </div>
                     <div class="listings">
                         {"".join(data['listings'])}
@@ -285,7 +473,7 @@ def send_emails(user_listings):
                 </head>
                 <body>
                     <h2 style="color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;">
-                        Property Listings Summary
+                        Auction Listings Summary
                     </h2>
                     {"".join(sections)}
                     <footer style="margin-top: 2rem; padding-top: 1rem; color: #7f8c8d; text-align: center;">

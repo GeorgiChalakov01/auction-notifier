@@ -8,6 +8,15 @@
     <div class="card-body">
         <form method="POST">
             <div class="mb-4">
+                <label class="form-label fw-bold">Filter Type:</label>
+                <select name="type" class="form-select form-select-lg" required>
+                    {% for value, label in filter_types %}
+                        <option value="{{ value }}" {% if value == filter.type %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-4">
                 <label class="form-label fw-bold">Court:</label>
                 <select name="court" class="form-select form-select-lg" required>
                     {% for num, name in court_choices %}
@@ -16,8 +25,6 @@
                 </select>
             </div>
 
-            <!-- Settlements, Excluded, Blacklist sections same as add_filter.html -->
-            <!-- Include dynamic fields with existing values -->
             {% macro render_field_section(field_name, label, values) %}
                 <div class="mb-4">
                     <div class="d-flex align-items-center mb-3">
@@ -51,6 +58,8 @@
             {{ render_field_section('settlements', 'Settlements', filter.settlements.split(',') if filter.settlements) }}
             {{ render_field_section('excluded', 'Excluded Types', filter.excluded_property_types.split(',') if filter.excluded_property_types) }}
             {{ render_field_section('blacklist', 'Blacklist Terms', filter.blacklist.split(',') if filter.blacklist) }}
+            {{ render_field_section('required_title', 'Required Title Words', filter.required_title_words.split(',') if filter.required_title_words) }}
+            {{ render_field_section('required_description', 'Required Description Words', filter.required_description_words.split(',') if filter.required_description_words) }}
 
             <div class="mb-4">
                 <label class="form-label fw-bold">Associate Users:</label>
@@ -80,6 +89,21 @@
 </div>
 
 <script>
-// Same dynamic field handling as add_filter.html
+function addField(type) {
+    const container = document.getElementById(`${type}-container`);
+    const newGroup = document.createElement('div');
+    newGroup.className = 'input-group mb-2';
+    newGroup.innerHTML = `
+        <input type="text" name="${type}[]" class="form-control">
+        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+            <i class="bi bi-dash"></i>
+        </button>
+    `;
+    container.appendChild(newGroup);
+}
+
+function removeField(btn) {
+    btn.closest('.input-group').remove();
+}
 </script>
 {% endblock %}

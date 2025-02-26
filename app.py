@@ -1,4 +1,3 @@
-# app.py
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, g, flash
 from datetime import datetime
@@ -15,6 +14,11 @@ COURT_CHOICES = [
     (18, 'Русе'), (19, 'Силистра'), (20, 'Сливен'), (21, 'Смолян'),
     (22, 'София град'), (23, 'София окръг'), (24, 'Стара Загора'),
     (25, 'Търговище'), (26, 'Хасково'), (27, 'Шумен'), (28, 'Ямбол')
+]
+
+FILTER_TYPES = [
+    ('property', 'Properties'),
+    ('vehicle', 'Vehicles')
 ]
 
 def get_db():
@@ -46,10 +50,13 @@ def init_db():
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS filter_groups (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                type TEXT NOT NULL DEFAULT 'property',
                 court INTEGER NOT NULL,
                 settlements TEXT,
                 excluded_property_types TEXT,
                 blacklist TEXT,
+                required_title_words TEXT,
+                required_description_words TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ''')
@@ -108,21 +115,29 @@ def add_filter():
     db = get_db()
     if request.method == 'POST':
         try:
+            filter_type = request.form['type']
             court = request.form['court']
             settlements = [s.strip() for s in request.form.getlist('settlements[]') if s.strip()]
             excluded = [e.strip() for e in request.form.getlist('excluded[]') if e.strip()]
             blacklist = [b.strip() for b in request.form.getlist('blacklist[]') if b.strip()]
+            req_title = [t.strip() for t in request.form.getlist('required_title[]') if t.strip()]
+            req_desc = [d.strip() for d in request.form.getlist('required_description[]') if d.strip()]
             user_emails = request.form.getlist('user_emails')
 
             cursor = db.cursor()
             cursor.execute('''
-                INSERT INTO filter_groups (court, settlements, excluded_property_types, blacklist)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO filter_groups (
+                    type, court, settlements, excluded_property_types,
+                    blacklist, required_title_words, required_description_words
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (
+                filter_type,
                 court,
                 ','.join(settlements) if settlements else None,
                 ','.join(excluded) if excluded else None,
-                ','.join(blacklist) if blacklist else None
+                ','.join(blacklist) if blacklist else None,
+                ','.join(req_title) if req_title else None,
+                ','.join(req_desc) if req_desc else None
             ))
             fg_id = cursor.lastrowid
 
@@ -139,7 +154,10 @@ def add_filter():
             return redirect(url_for('add_filter'))
     
     users = db.execute('SELECT * FROM users ORDER BY email').fetchall()
-    return render_template('add_filter.html', court_choices=COURT_CHOICES, users=users)
+    return render_template('add_filter.html', 
+                         court_choices=COURT_CHOICES, 
+                         filter_types=FILTER_TYPES, 
+                         users=users)
 
 @app.route('/delete_filter/<int:filter_id>', methods=['POST'])
 def delete_filter(filter_id):
@@ -151,7 +169,6 @@ def delete_filter(filter_id):
     except Exception as e:
         flash(f'❌ Error deleting filter: {str(e)}', 'error')
     return redirect(url_for('filters'))
-
 
 @app.route('/filters')
 def filters():
@@ -166,7 +183,8 @@ def filters():
     ''').fetchall()
     return render_template('filters.html', 
                          filters=filters,
-                         court_choices=dict(COURT_CHOICES))
+                         court_choices=dict(COURT_CHOICES),
+                         filter_types=dict(FILTER_TYPES))
 
 @app.route('/edit_filter/<int:filter_id>', methods=['GET', 'POST'])
 def edit_filter(filter_id):
@@ -175,25 +193,34 @@ def edit_filter(filter_id):
     
     if request.method == 'POST':
         try:
+            filter_type = request.form['type']
             court = request.form['court']
             settlements = [s.strip() for s in request.form.getlist('settlements[]') if s.strip()]
             excluded = [e.strip() for e in request.form.getlist('excluded[]') if e.strip()]
             blacklist = [b.strip() for b in request.form.getlist('blacklist[]') if b.strip()]
+            req_title = [t.strip() for t in request.form.getlist('required_title[]') if t.strip()]
+            req_desc = [d.strip() for d in request.form.getlist('required_description[]') if d.strip()]
             user_emails = request.form.getlist('user_emails')
 
             # Update filter group
             db.execute('''
                 UPDATE filter_groups 
-                SET court = ?,
+                SET type = ?,
+                    court = ?,
                     settlements = ?,
                     excluded_property_types = ?,
-                    blacklist = ?
+                    blacklist = ?,
+                    required_title_words = ?,
+                    required_description_words = ?
                 WHERE id = ?
             ''', (
+                filter_type,
                 court,
                 ','.join(settlements) if settlements else None,
                 ','.join(excluded) if excluded else None,
                 ','.join(blacklist) if blacklist else None,
+                ','.join(req_title) if req_title else None,
+                ','.join(req_desc) if req_desc else None,
                 filter_id
             ))
 
@@ -226,6 +253,7 @@ def edit_filter(filter_id):
     return render_template('edit_filter.html',
                          filter=filter_group,
                          court_choices=COURT_CHOICES,
+                         filter_types=FILTER_TYPES,
                          users=all_users,
                          associated_emails=associated_emails)
 

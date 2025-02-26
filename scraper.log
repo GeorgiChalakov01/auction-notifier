@@ -734,3 +734,192 @@
 2025-02-26 13:16:57,871 - INFO - 🏁 Scraping complete. Processed 13 listings total
 2025-02-26 13:16:57,871 - INFO - 📧 Preparing to send emails to 1 users
 2025-02-26 13:17:00,034 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 20:33:49,066 - INFO - 🚀 Starting scraping process
+2025-02-26 20:33:49,067 - INFO - Loaded 1 active filter groups
+2025-02-26 20:33:49,067 - INFO - 🔍 Processing vehicle court 1 (Filter Group 1)
+2025-02-26 20:33:49,922 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=1&p=1
+2025-02-26 20:33:50,035 - INFO - 🚗 Found 3 vehicle listings on page 1
+2025-02-26 20:33:53,338 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=1&p=2
+2025-02-26 20:33:53,435 - INFO - 🏁 No more results on page 2
+2025-02-26 20:33:53,435 - INFO - 🏁 Scraping complete. Processed 3 listings total
+2025-02-26 20:33:53,435 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 20:33:55,565 - INFO - ✉️ Email sent to gchalakov@gmail.com
+2025-02-26 20:35:44,302 - INFO - 🚀 Starting scraping process
+2025-02-26 20:35:44,303 - INFO - Loaded 1 active filter groups
+2025-02-26 20:35:44,303 - INFO - 🔍 Processing vehicle court 1 (Filter Group 1)
+2025-02-26 20:35:45,075 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=1&p=1
+2025-02-26 20:35:45,206 - INFO - 🚗 Found 3 vehicle listings on page 1
+2025-02-26 20:35:48,120 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=1&p=2
+2025-02-26 20:35:48,232 - INFO - 🏁 No more results on page 2
+2025-02-26 20:35:48,232 - INFO - 🏁 Scraping complete. Processed 3 listings total
+2025-02-26 20:35:48,232 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 20:35:50,090 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 20:38:04,553 - INFO - 🚀 Starting scraping process
+2025-02-26 20:38:04,553 - INFO - Loaded 1 active filter groups
+2025-02-26 20:38:04,553 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 20:38:05,544 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 20:38:05,673 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 20:38:16,722 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 20:38:16,865 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 20:38:18,146 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 20:38:18,250 - INFO - 🏁 No more results on page 3
+2025-02-26 20:38:18,251 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 20:38:18,251 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 20:38:20,108 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 20:58:22,188 - INFO - 🚀 Starting scraping process
+2025-02-26 20:58:22,188 - INFO - Loaded 1 active filter groups
+2025-02-26 20:58:22,189 - INFO - 🔍 Processing vehicle court 22 (Filter Group 1)
+2025-02-26 20:58:22,954 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=22&p=1
+2025-02-26 20:58:23,100 - INFO - 🚗 Found 2 vehicle listings on page 1
+2025-02-26 20:58:23,597 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=22&p=2
+2025-02-26 20:58:23,693 - INFO - 🏁 No more results on page 2
+2025-02-26 20:58:23,693 - INFO - 🏁 Scraping complete. Processed 2 listings total
+2025-02-26 20:58:23,693 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 20:58:25,520 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:04:14,221 - INFO - 🚀 Starting scraping process
+2025-02-26 21:04:14,222 - INFO - Loaded 1 active filter groups
+2025-02-26 21:04:14,222 - INFO - 🔍 Processing vehicle court 18 (Filter Group 2)
+2025-02-26 21:04:14,977 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:04:15,115 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:04:15,844 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:04:15,976 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:04:16,413 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:04:16,525 - INFO - 🏁 No more results on page 3
+2025-02-26 21:04:16,525 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:04:16,525 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:04:18,429 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:04:40,116 - INFO - 🚀 Starting scraping process
+2025-02-26 21:04:40,116 - INFO - Loaded 1 active filter groups
+2025-02-26 21:04:40,116 - INFO - 🔍 Processing vehicle court 18 (Filter Group 2)
+2025-02-26 21:04:40,889 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:04:41,024 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:04:41,780 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:04:41,862 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:04:42,365 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:04:42,485 - INFO - 🏁 No more results on page 3
+2025-02-26 21:04:42,485 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:04:42,486 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:04:44,155 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:05:32,981 - INFO - 🚀 Starting scraping process
+2025-02-26 21:05:32,982 - INFO - Loaded 1 active filter groups
+2025-02-26 21:05:32,982 - INFO - 🔍 Processing vehicle court 18 (Filter Group 2)
+2025-02-26 21:05:33,796 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:05:33,917 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:05:34,612 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:05:34,732 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:05:35,192 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:05:35,262 - INFO - 🏁 No more results on page 3
+2025-02-26 21:05:35,262 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:05:35,262 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:05:37,008 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:08:27,852 - INFO - 🚀 Starting scraping process
+2025-02-26 21:08:27,853 - INFO - Loaded 1 active filter groups
+2025-02-26 21:08:27,853 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:08:28,627 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:08:28,764 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:08:29,554 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:08:29,654 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:08:30,133 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:08:30,220 - INFO - 🏁 No more results on page 3
+2025-02-26 21:08:30,221 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:08:30,221 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:08:32,260 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:08:40,387 - INFO - 🚀 Starting scraping process
+2025-02-26 21:08:40,388 - INFO - Loaded 1 active filter groups
+2025-02-26 21:08:40,388 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:08:41,185 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:08:41,324 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:08:42,112 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:08:42,218 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:08:42,679 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:08:42,783 - INFO - 🏁 No more results on page 3
+2025-02-26 21:08:42,784 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:08:42,784 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:08:44,439 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:09:20,953 - INFO - 🚀 Starting scraping process
+2025-02-26 21:09:20,954 - INFO - Loaded 1 active filter groups
+2025-02-26 21:09:20,954 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:09:21,710 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:09:21,863 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:09:22,542 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:09:22,664 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:09:23,161 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:09:23,291 - INFO - 🏁 No more results on page 3
+2025-02-26 21:09:23,291 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:09:23,291 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:09:25,060 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:10:18,820 - INFO - 🚀 Starting scraping process
+2025-02-26 21:10:18,821 - INFO - Loaded 1 active filter groups
+2025-02-26 21:10:18,821 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:10:19,701 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:10:19,812 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:10:20,581 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:10:20,690 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:10:21,131 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:10:21,233 - INFO - 🏁 No more results on page 3
+2025-02-26 21:10:21,233 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:10:21,234 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:10:23,111 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:11:17,928 - INFO - 🚀 Starting scraping process
+2025-02-26 21:11:17,929 - INFO - Loaded 1 active filter groups
+2025-02-26 21:11:17,929 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:11:18,666 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=1
+2025-02-26 21:11:18,807 - INFO - 🚗 Found 12 vehicle listings on page 1
+2025-02-26 21:11:19,556 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=2
+2025-02-26 21:11:19,668 - INFO - 🚗 Found 1 vehicle listings on page 2
+2025-02-26 21:11:20,427 - INFO - 🌐 Successfully fetched https://sales.bcpea.org/vehicles?court=18&p=3
+2025-02-26 21:11:20,526 - INFO - 🏁 No more results on page 3
+2025-02-26 21:11:20,526 - INFO - 🏁 Scraping complete. Processed 13 listings total
+2025-02-26 21:11:20,526 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:11:23,407 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:37:31,079 - INFO - 🚀 Starting scraping process
+2025-02-26 21:37:31,079 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:37:32,012 - INFO - 🚗 Found 12 vehicles on page 1
+2025-02-26 21:37:32,927 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5708 - missing title words: toyota
+2025-02-26 21:37:34,006 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5707 - missing title words: toyota
+2025-02-26 21:37:35,728 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5702 - missing title words: toyota
+2025-02-26 21:37:36,793 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5701 - missing title words: toyota
+2025-02-26 21:37:37,823 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5673 - missing title words: toyota
+2025-02-26 21:37:38,742 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5672 - missing title words: toyota
+2025-02-26 21:37:39,616 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5665 - missing title words: toyota
+2025-02-26 21:37:40,433 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5664 - missing title words: toyota
+2025-02-26 21:37:41,313 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5663 - missing title words: toyota
+2025-02-26 21:37:42,196 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5660 - missing title words: toyota
+2025-02-26 21:37:43,838 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5608 - missing title words: toyota
+2025-02-26 21:37:44,658 - INFO - 🚗 Found 1 vehicles on page 2
+2025-02-26 21:37:45,627 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5607 - missing title words: toyota
+2025-02-26 21:37:46,181 - INFO - 🏁 Scraping complete. Processed 1 listings total
+2025-02-26 21:37:46,182 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:37:48,108 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:38:49,700 - INFO - 🚀 Starting scraping process
+2025-02-26 21:38:49,701 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:38:50,578 - INFO - 🚗 Found 12 vehicles on page 1
+2025-02-26 21:38:51,429 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5708 - missing description words: васил николов
+2025-02-26 21:38:53,079 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5702 - missing description words: васил николов
+2025-02-26 21:38:53,988 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5701 - missing description words: васил николов
+2025-02-26 21:38:54,878 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5673 - missing description words: васил николов
+2025-02-26 21:38:55,717 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5672 - missing description words: васил николов
+2025-02-26 21:39:00,412 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5633 - missing description words: васил николов
+2025-02-26 21:39:02,119 - INFO - 🚗 Found 1 vehicles on page 2
+2025-02-26 21:39:03,663 - INFO - 🏁 Scraping complete. Processed 7 listings total
+2025-02-26 21:39:03,663 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:39:05,980 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com
+2025-02-26 21:40:13,298 - INFO - 🚀 Starting scraping process
+2025-02-26 21:40:13,299 - INFO - 🔍 Processing vehicle court 18 (Filter Group 1)
+2025-02-26 21:40:14,268 - INFO - 🚗 Found 12 vehicles on page 1
+2025-02-26 21:40:15,119 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5708 - missing description words: мерцедес
+2025-02-26 21:40:16,079 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5707 - missing description words: мерцедес
+2025-02-26 21:40:17,013 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5702 - missing description words: мерцедес
+2025-02-26 21:40:17,852 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5701 - missing description words: мерцедес
+2025-02-26 21:40:18,720 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5673 - missing description words: мерцедес
+2025-02-26 21:40:19,705 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5672 - missing description words: мерцедес
+2025-02-26 21:40:20,563 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5665 - missing description words: мерцедес
+2025-02-26 21:40:21,430 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5664 - missing description words: мерцедес
+2025-02-26 21:40:22,323 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5663 - missing description words: мерцедес
+2025-02-26 21:40:23,262 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5660 - missing description words: мерцедес
+2025-02-26 21:40:24,124 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5633 - missing description words: мерцедес
+2025-02-26 21:40:24,969 - INFO - ⛔ Skipping vehicle https://sales.bcpea.org/vehicles/5608 - missing description words: мерцедес
+2025-02-26 21:40:25,937 - INFO - 🚗 Found 1 vehicles on page 2
+2025-02-26 21:40:27,735 - INFO - 🏁 Scraping complete. Processed 1 listings total
+2025-02-26 21:40:27,736 - INFO - 📧 Preparing to send emails to 1 users
+2025-02-26 21:40:30,611 - INFO - ✉️ Email sent to gchalakovmmi@gmail.com

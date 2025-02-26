@@ -8,6 +8,15 @@
     <div class="card-body">
         <form method="POST">
             <div class="mb-4">
+                <label class="form-label fw-bold">Filter Type:</label>
+                <select name="type" class="form-select form-select-lg" required>
+                    {% for value, label in filter_types %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-4">
                 <label class="form-label fw-bold">Court:</label>
                 <select name="court" class="form-select form-select-lg" required>
                     {% for num, name in court_choices %}
@@ -60,6 +69,40 @@
                 <div id="blacklist-container">
                     <div class="input-group mb-2">
                         <input type="text" name="blacklist[]" class="form-control">
+                        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <label class="form-label fw-bold me-3">Required Title Words:</label>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addField('required_title')">
+                        <i class="bi bi-plus"></i> Add
+                    </button>
+                </div>
+                <div id="required_title-container">
+                    <div class="input-group mb-2">
+                        <input type="text" name="required_title[]" class="form-control">
+                        <button type="button" class="btn btn-danger" onclick="removeField(this)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <label class="form-label fw-bold me-3">Required Description Words:</label>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addField('required_description')">
+                        <i class="bi bi-plus"></i> Add
+                    </button>
+                </div>
+                <div id="required_description-container">
+                    <div class="input-group mb-2">
+                        <input type="text" name="required_description[]" class="form-control">
                         <button type="button" class="btn btn-danger" onclick="removeField(this)">
                             <i class="bi bi-dash"></i>
                         </button>
