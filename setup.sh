@@ -9,9 +9,11 @@ python -m venv venv
 . venv/bin/activate
 
 # Install required packages
-pip install flask requests beautifulsoup4 lxml python-dotemail
+pip install --upgrade pip
+pip install flask requests beautifulsoup4 lxml #python-dotemail
 
 # Create necessary directories
 mkdir -p instance templates static/css static/js
 
 echo "Setup complete. Activate virtual environment with: source venv/bin/activate"
+
