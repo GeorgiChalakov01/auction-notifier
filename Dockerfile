@@ -3,7 +3,7 @@ FROM alpine:latest
 # Install dependencies
 RUN apk update && \
     apk upgrade --no-cache && \
-    apk add --no-cache python3 py3-pip git
+    apk add --no-cache python3 py3-pip git cronie
 
 # Set working directory
 WORKDIR /app
@@ -11,11 +11,14 @@ WORKDIR /app
 # Copy application files
 COPY . .
 
-# Install dependencies (assuming setup.sh handles virtual environment and pip installs)
+# Install dependencies
 RUN chmod +x setup.sh && ./setup.sh
 
-# Expose container port (host mapping is done at runtime)
+# Set up cron
+RUN chmod +x setup-cron.sh
+
+# Expose container port
 EXPOSE 5000
 
-# Run application using virtual environment
-CMD ["/app/venv/bin/python", "app.py", "--host=0.0.0.0"]
+# Run application and cron
+CMD ["sh", "-c", "./setup-cron.sh && /app/venv/bin/python app.py --host=0.0.0.0"]

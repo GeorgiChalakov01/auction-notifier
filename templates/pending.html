@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow col-md-8 mx-auto">
+    <div class="card-header bg-info text-white">
+        <h4 class="mb-0"><i class="bi bi-hourglass-split"></i> Account Pending Approval</h4>
+    </div>
+    <div class="card-body text-center">
+        <div class="py-5">
+            <i class="bi bi-person-check" style="font-size: 5rem; color: #0dcaf0;"></i>
+            <h3 class="mt-4">Thank You for Registering!</h3>
+            <p class="lead">Your account is currently pending admin approval.</p>
+            <p>You'll receive an email notification once your account has been approved.</p>
+            <p>Please check back later.</p>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-primary">
+                    <i class="bi bi-box-arrow-left"></i> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

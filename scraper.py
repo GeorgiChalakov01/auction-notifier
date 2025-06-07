@@ -1,4 +1,3 @@
-# scraper.py
 import sqlite3
 import smtplib
 import logging
@@ -40,11 +39,13 @@ def get_active_filters():
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
+        # Only get filters for approved users
         cursor.execute('''
             SELECT fg.*, u.email 
             FROM filter_groups fg
             JOIN user_filters uf ON fg.id = uf.filter_group_id
-            JOIN users u ON uf.user_id = u.id
+            JOIN auth_user u ON uf.user_id = u.id
+            WHERE u.status = 'approved'
         ''')
         
         filters = {}
@@ -68,6 +69,8 @@ def get_active_filters():
     except Exception as e:
         logging.error(f"Error loading filters: {str(e)}")
         return {}
+
+# ... rest of the scraper.py file remains unchanged from your original version ...
 
 def process_listing(title, description, fg):
     """Validate listing against required words"""
